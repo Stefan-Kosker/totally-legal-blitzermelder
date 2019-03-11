@@ -1,4 +1,4 @@
-#include "DisplayOnLCD.h"
+#include "DisplayOnTFT.h"
 #include "InternalVoltage.h"
 #include "OilTemperature.h"
 #include "Fuel.h"
@@ -8,7 +8,7 @@ double oilTemperatureValue;
 double fuelAmount;
 
 void setup() {
-  lcd.begin(20, 4);
+  tftDisplay.initializeDisplay();
 }
 
 void loop() {
@@ -16,9 +16,9 @@ void loop() {
   oilTemperatureValue = oilTemperature.getOilTemperature();
   fuelAmount = fuel.getFuelAmount();
 
-  lcdDisplay.showInternalVoltage(referenceVoltage);
-  lcdDisplay.showOilTemperature(oilTemperatureValue);
-  lcdDisplay.showFuelAmount(fuelAmountü);
-  delay(100);
-  lcdDisplay.clearAll();
+//  lcdDisplay.showInternalVoltage(referenceVoltage);
+//  lcdDisplay.showOilTemperature(oilTemperatureValue);
+//  lcdDisplay.showFuelAmount(fuelAmount);
+//  delay(100);
+//  lcdDisplay.clearAll();
 }
