@@ -33,5 +33,4 @@ class OilTemperature {
 
 };
 
-OilTemperature oilTemperature;
-
+OilTemperature oilTemperatureSensor;

@@ -4,20 +4,24 @@
 #include "Fuel.h"
 
 double referenceVoltage;
-double oilTemperatureValue;
+double oilTemperature;
 double fuelAmount;
+
+double oldReferenceVoltage;
+double oldOilTemperature;
+double oldFuelAmount;
 
 void setup() {
   tftDisplay.initializeDisplay();
 }
 
 void loop() {
-  referenceVoltage = internalVoltage.getInternalReferenceVoltage();
-  oilTemperatureValue = oilTemperature.getOilTemperature();
-  fuelAmount = fuel.getFuelAmount();
+  referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
+  oilTemperature = oilTemperatureSensor.getOilTemperature();
+  fuelAmount = fuelSensor.getFuelAmount();
 
 //  lcdDisplay.showInternalVoltage(referenceVoltage);
-//  lcdDisplay.showOilTemperature(oilTemperatureValue);
+//  lcdDisplay.showOilTemperature(oilTemperature);
 //  lcdDisplay.showFuelAmount(fuelAmount);
 //  delay(100);
 //  lcdDisplay.clearAll();

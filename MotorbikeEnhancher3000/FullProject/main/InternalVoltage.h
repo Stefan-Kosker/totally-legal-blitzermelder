@@ -19,4 +19,4 @@ class InternalVoltage {
 
 };
 
-InternalVoltage internalVoltage;
+InternalVoltage internalVoltageSensor;

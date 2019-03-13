@@ -27,4 +27,4 @@ class Fuel {
     }
 };
 
-Fuel fuel;
+Fuel fuelSensor;
