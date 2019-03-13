@@ -5,11 +5,11 @@
 
 double referenceVoltage;
 double oilTemperature;
-double fuelAmount;
+int fuelAmount;
 
-double oldReferenceVoltage;
+double oldReferenceVoltage = 0.0;
 double oldOilTemperature;
-double oldFuelAmount;
+int oldFuelAmount;
 
 void setup() {
   tftDisplay.initializeDisplay();
@@ -17,12 +17,20 @@ void setup() {
 
 void loop() {
   referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
-  oilTemperature = oilTemperatureSensor.getOilTemperature();
-  fuelAmount = fuelSensor.getFuelAmount();
+  if(abs(oldReferenceVoltage - referenceVoltage) > 0.3) {
+    tftDisplay.updateVoltageValue(oldReferenceVoltage, referenceVoltage);
+    oldReferenceVoltage = referenceVoltage;
+  }
 
-//  lcdDisplay.showInternalVoltage(referenceVoltage);
-//  lcdDisplay.showOilTemperature(oilTemperature);
-//  lcdDisplay.showFuelAmount(fuelAmount);
-//  delay(100);
-//  lcdDisplay.clearAll();
+  oilTemperature = oilTemperatureSensor.getOilTemperature();
+  if(abs(oldOilTemperature - oilTemperature) >= 1.0) {
+    tftDisplay.updateTemperatureValue(oldOilTemperature, oilTemperature);
+    oldOilTemperature = oilTemperature;
+  }
+  
+  fuelAmount = fuelSensor.getFuelAmount();
+  if(abs(oldFuelAmount - fuelAmount) >= 1) {
+    tftDisplay.updateFuelValue(oldFuelAmount, fuelAmount);
+    oldFuelAmount = fuelAmount;
+  }
 }

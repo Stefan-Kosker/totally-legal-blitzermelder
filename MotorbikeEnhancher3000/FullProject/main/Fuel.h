@@ -3,10 +3,10 @@ class Fuel {
     double referenceResistance = 47;
     InternalVoltage internalVoltage;
 
-    double convertFuelResistanceToFuel(double fuelResistance) {
+    int convertFuelResistanceToFuel(double fuelResistance) {
       double fuelAmount;
       fuelAmount = 1.061143 - 0.01630667 * fuelResistance + 0.00005695241 * pow(fuelResistance, 2);
-      return fuelAmount;
+      return (int)(fuelAmount * 100);
     }
 
     double getFuelResistance() {

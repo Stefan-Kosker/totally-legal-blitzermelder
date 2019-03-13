@@ -5,8 +5,23 @@
 #define IMGWIDTH 38
 #define IMGHEIGHT 32
 #define TEXTMARGINLEFT 50
-#define TEXTMARGINTOP 12
+#define TEXTMARGINTOP 18
 
-#define NORMALTEXTCOLOR_R 255
-#define NORMALTEXTCOLOR_G 255
-#define NORMALTEXTCOLOR_B 255
+#define InitialIconColor ST7735_GREEN
+#define AlertIconColor ST7735_BLUE
+
+#define NormalTextColor_R 255
+#define NormalTextColor_G 255
+#define NormalTextColor_B 255
+
+#define NormalBackgroundColor_R 0
+#define NormalBackgroundColor_G 0
+#define NormalBackgroundColor_B 0
+
+#define AlertTextColor_R 255
+#define AlertTextColor_G 0
+#define AlertTextColor_B 0
+
+#define AlertBackgroundColor_R 255
+#define AlertBackgroundColor_G 255
+#define AlertBackgroundColor_B 255
