@@ -22,6 +22,8 @@ class Fuel {
     }
 
   public:
+    unsigned long lastTimeSensorRead = 0;
+    int sensorReadInterval = 5000;
     double getFuelAmount() {
       return convertFuelResistanceToFuel(getFuelResistance());
     }

@@ -5,7 +5,7 @@ class OilTemperature {
     int analogTemperatureValue = 0;
     double temperatureVoltage;
     double temperatureResistance;
-    double referenceVoltage; 
+    double referenceVoltage;
     InternalVoltage internalVoltage;
 
     double getOilTemperatureRessistance() {
@@ -26,11 +26,12 @@ class OilTemperature {
     }
 
   public:
-
+    unsigned long lastTimeSensorRead = 0;
+    int sensorReadInterval = 1000;
+    
     double getOilTemperature() {
       return convertOilTemperatureResistanceToCelcius(getOilTemperatureRessistance());
     }
-
 };
 
 OilTemperature oilTemperatureSensor;

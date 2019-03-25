@@ -10,27 +10,35 @@ int fuelAmount;
 double oldReferenceVoltage = 0.0;
 double oldOilTemperature;
 int oldFuelAmount;
+unsigned long time;
 
 void setup() {
   tftDisplay.initializeDisplay();
 }
 
 void loop() {
+  time = millis();
   referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
-  if(abs(oldReferenceVoltage - referenceVoltage) > 0.3) {
+  if (abs(oldReferenceVoltage - referenceVoltage) > 0.3) {
     tftDisplay.updateVoltageValue(oldReferenceVoltage, referenceVoltage);
     oldReferenceVoltage = referenceVoltage;
   }
 
-  oilTemperature = oilTemperatureSensor.getOilTemperature();
-  if(abs(oldOilTemperature - oilTemperature) >= 1.0) {
-    tftDisplay.updateTemperatureValue(oldOilTemperature, oilTemperature);
-    oldOilTemperature = oilTemperature;
+  if ((time - oilTemperatureSensor.lastTimeSensorRead) > oilTemperatureSensor.sensorReadInterval) {
+    oilTemperatureSensor.lastTimeSensorRead = time;
+    oilTemperature = oilTemperatureSensor.getOilTemperature();
+    if (abs(oldOilTemperature - oilTemperature) >= 0.5) {
+      tftDisplay.updateTemperatureValue(oldOilTemperature, oilTemperature);
+      oldOilTemperature = oilTemperature;
+    }
   }
-  
-  fuelAmount = fuelSensor.getFuelAmount();
-  if(abs(oldFuelAmount - fuelAmount) >= 1) {
-    tftDisplay.updateFuelValue(oldFuelAmount, fuelAmount);
-    oldFuelAmount = fuelAmount;
+
+  if ((time - fuelSensor.lastTimeSensorRead) > fuelSensor.sensorReadInterval) {
+    fuelSensor.lastTimeSensorRead = time;
+    fuelAmount = fuelSensor.getFuelAmount();
+    if (abs(oldFuelAmount - fuelAmount) >= 1) {
+      tftDisplay.updateFuelValue(oldFuelAmount, fuelAmount);
+      oldFuelAmount = fuelAmount;
+    }
   }
 }
