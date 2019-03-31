@@ -49,7 +49,7 @@ function writeBlitzerInCsvFile()
     $file = fopen('blitzerList.csv', 'w+');
     foreach ($GLOBALS['scrappedBlitzerArray'] as $value) {
         if ($value !== null) {
-            $line = $value['long'] . ',' . $value['let'] . ',' . $value['speed'] . ";\n";
+            $line = $value['long'] . ',' . $value['lat'] . ',' . $value['speed'] . ";\n";
             fwrite($file,  $line);
         }
     }
@@ -76,11 +76,14 @@ function parseXml($xmlString)
 
     foreach ($blitzerList->marker as $blitzerEintrag) {
         $id = $blitzerEintrag->attributes()->id->__toString();
-        if (!key_exists($id, $GLOBALS['scrappedBlitzerArray'])) {
-            $GLOBALS['scrappedBlitzerArray'][$id] = [];
-            $GLOBALS['scrappedBlitzerArray'][$id]['long'] = $blitzerEintrag->attributes()->lng->__toString();
-            $GLOBALS['scrappedBlitzerArray'][$id]['lat'] = $blitzerEintrag->attributes()->lat->__toString();
-            $GLOBALS['scrappedBlitzerArray'][$id]['speed'] = $blitzerEintrag->attributes()->speed->__toString();
+        $type = $blitzerEintrag->attributes()->rawType->__toString();
+        if($type === 'G' || $type === 'GA') {
+            if (!key_exists($id, $GLOBALS['scrappedBlitzerArray'])) {
+                $GLOBALS['scrappedBlitzerArray'][$id] = [];
+                $GLOBALS['scrappedBlitzerArray'][$id]['long'] = $blitzerEintrag->attributes()->lng->__toString();
+                $GLOBALS['scrappedBlitzerArray'][$id]['lat'] = $blitzerEintrag->attributes()->lat->__toString();
+                $GLOBALS['scrappedBlitzerArray'][$id]['speed'] = $blitzerEintrag->attributes()->speed->__toString();
+            }
         }
     }
 }
