@@ -46,8 +46,8 @@ function getBlitzer($x, $y, $increment)
 
 function writeBlitzerInCsvFile()
 {
-    $file = fopen('blitzerList.h', 'w+');
-    fwrite($file, "const double radarPositions[][3] PROGMEM = {\n");
+    $file = fopen('RadarPositions.h', 'w+');
+    fwrite($file, "double radarPositions[][3] = {\n");
 
     foreach ($GLOBALS['scrappedBlitzerArray'] as $value) {
         if ($value !== null) {

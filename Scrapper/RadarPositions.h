@@ -1,4 +1,4 @@
-const double radarPositions[][3] PROGMEM = {
+double radarPositions[][3] = {
 {47.074867,5.458992,80},
 {47.086773,5.420333,130},
 {47.173363,5.495277,80},

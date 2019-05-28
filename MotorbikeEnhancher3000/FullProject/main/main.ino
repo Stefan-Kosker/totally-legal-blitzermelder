@@ -15,6 +15,8 @@ unsigned long time;
 
 void setup() {
   tftDisplay.initializeDisplay();
+  Serial.begin(9600);
+  Serial.println(radarPositions[0][1],6);
 }
 
 void loop() {
