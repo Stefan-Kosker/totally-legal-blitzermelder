@@ -46,13 +46,16 @@ function getBlitzer($x, $y, $increment)
 
 function writeBlitzerInCsvFile()
 {
-    $file = fopen('blitzerList.csv', 'w+');
+    $file = fopen('blitzerList.h', 'w+');
+    fwrite($file, "const double radarPositions[][3] PROGMEM = {\n");
+
     foreach ($GLOBALS['scrappedBlitzerArray'] as $value) {
         if ($value !== null) {
-            $line = $value['long'] . ',' . $value['lat'] . ',' . $value['speed'] . ";\n";
-            fwrite($file,  $line);
+            $line = "{" . $value['long'] . ',' . $value['lat'] . ',' . $value['speed'] . "},\n";
+            fwrite($file, $line);
         }
     }
+    fwrite($file, "};");
     fclose($file);
 }
 
@@ -77,7 +80,7 @@ function parseXml($xmlString)
     foreach ($blitzerList->marker as $blitzerEintrag) {
         $id = $blitzerEintrag->attributes()->id->__toString();
         $type = $blitzerEintrag->attributes()->rawType->__toString();
-        if($type === 'G' || $type === 'GA') {
+        if ($type === 'G' || $type === 'GA') {
             if (!key_exists($id, $GLOBALS['scrappedBlitzerArray'])) {
                 $GLOBALS['scrappedBlitzerArray'][$id] = [];
                 $GLOBALS['scrappedBlitzerArray'][$id]['long'] = $blitzerEintrag->attributes()->lng->__toString();

@@ -2,6 +2,7 @@
 #include "InternalVoltage.h"
 #include "OilTemperature.h"
 #include "Fuel.h"
+#include "RadarPositions.h"
 
 double referenceVoltage;
 double oilTemperature;
