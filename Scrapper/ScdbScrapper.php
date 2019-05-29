@@ -47,13 +47,22 @@ function getBlitzer($x, $y, $increment)
 function writeBlitzerInCsvFile()
 {
     $file = fopen('RadarPositions.h', 'w+');
-    fwrite($file, "double radarPositions[][3] = {\n");
 
-    foreach ($GLOBALS['scrappedBlitzerArray'] as $value) {
-        if ($value !== null) {
-            $line = "{" . $value['long'] . ',' . $value['lat'] . ',' . $value['speed'] . "},\n";
+//    foreach ($GLOBALS['scrappedBlitzerArray'] as $value) {
+    $arrayAmount = 0;
+
+    for($i = 0; $i < sizeof($GLOBALS['scrappedBlitzerArray']); $i++) {
+        if (key_exists($i, $GLOBALS['scrappedBlitzerArray']) && $GLOBALS['scrappedBlitzerArray'][$i] !== null) {
+            $value = $GLOBALS['scrappedBlitzerArray'][$i];
+            $line = "double rP". $arrayAmount . "[3] = {" . $value['long'] . ',' . $value['lat'] . ',' . $value['speed'] . "};\n";
             fwrite($file, $line);
+            $arrayAmount++;
         }
+    }
+
+    fwrite($file, "double *radarPositions[] = {");
+    for($i = 0; $i <$arrayAmount; $i++){
+        fwrite($file, "rP" . $i . ", ");
     }
     fwrite($file, "};");
     fclose($file);
