@@ -4,9 +4,12 @@
 #include "Fuel.h"
 #include "RadarPositions.h"
 
+
 double referenceVoltage;
 double oilTemperature;
 int fuelAmount;
+int counter = 1;
+float value;
 
 double oldReferenceVoltage = 0.0;
 double oldOilTemperature;
@@ -16,7 +19,6 @@ unsigned long time;
 void setup() {
   tftDisplay.initializeDisplay();
   Serial.begin(9600);
-  Serial.println(radarPositions[0][1],6);
 }
 
 void loop() {
@@ -43,5 +45,37 @@ void loop() {
       tftDisplay.updateFuelValue(oldFuelAmount, fuelAmount);
       oldFuelAmount = fuelAmount;
     }
+  }
+  Serial.println(counter);
+  switch (counter) {
+    case 1:
+      value = readFromMemory(1, 0, 0);
+      Serial.println(value, 6);
+      counter++;
+      break;
+
+    case 2:
+      value = readFromMemory(2, 0, 0);
+      Serial.println(value, 6);
+      counter++;
+      break;
+    case 3:
+      counter = 1;
+      value = readFromMemory(3, 0, 0);
+      Serial.println(value, 6);
+      break;
+  }
+  delay(1000);
+}
+
+double readFromMemory(int arrayIndex, int firstDimension, int secondDimension) {
+  if (arrayIndex == 1) {
+    return pgm_read_float(&radarPositions1[firstDimension][secondDimension]);
+  }
+  if (arrayIndex == 2) {
+    return pgm_read_float(&radarPositions2[firstDimension][secondDimension]);
+  }
+  if (arrayIndex == 3) {
+    return pgm_read_float(&radarPositions3[firstDimension][secondDimension]);
   }
 }

@@ -46,25 +46,50 @@ function getBlitzer($x, $y, $increment)
 
 function writeBlitzerInCsvFile()
 {
+    $counter = 0;
+    $counterLimit = sizeof($GLOBALS['scrappedBlitzerArray']) / 3;
+
     $file = fopen('RadarPositions.h', 'w+');
+    fwrite($file, "const float radarPositions1[][3] PROGMEM = {\n");
 
-//    foreach ($GLOBALS['scrappedBlitzerArray'] as $value) {
-    $arrayAmount = 0;
 
-    for($i = 0; $i < sizeof($GLOBALS['scrappedBlitzerArray']); $i++) {
-        if (key_exists($i, $GLOBALS['scrappedBlitzerArray']) && $GLOBALS['scrappedBlitzerArray'][$i] !== null) {
-            $value = $GLOBALS['scrappedBlitzerArray'][$i];
-            $line = "double rP". $arrayAmount . "[3] = {" . $value['long'] . ',' . $value['lat'] . ',' . $value['speed'] . "};\n";
+    foreach ($GLOBALS['scrappedBlitzerArray'] as $key => $value) {
+
+        if ($value !== null) {
+            $line = "{" . $value['long'] . ',' . $value['lat'] . ',' . $value['speed'] . "},\n";
             fwrite($file, $line);
-            $arrayAmount++;
         }
+        unset($GLOBALS['scrappedBlitzerArray'][$key]);
+        if ($counter > $counterLimit){
+            break;
+        }
+        $counter++;
     }
+    $counter = 0;
+    fwrite($file, "};\n const float radarPositions2[][3] PROGMEM = {\n");
 
-    fwrite($file, "double *radarPositions[] = {");
-    for($i = 0; $i <$arrayAmount; $i++){
-        fwrite($file, "rP" . $i . ", ");
+    foreach ($GLOBALS['scrappedBlitzerArray'] as $key => $value) {
+        if ($value !== null) {
+            $line = "{" . $value['long'] . ',' . $value['lat'] . ',' . $value['speed'] . "},\n";
+            fwrite($file, $line);
+        }
+        unset($GLOBALS['scrappedBlitzerArray'][$key]);
+        if ($counter > $counterLimit){
+            break;
+        }
+        $counter++;
+    }
+    fwrite($file, "};\n const float radarPositions3[][3] PROGMEM = {\n");
+
+    foreach ($GLOBALS['scrappedBlitzerArray'] as $key => $value) {
+        if ($value !== null) {
+            $line = "{" . $value['long'] . ',' . $value['lat'] . ',' . $value['speed'] . "},\n";
+            fwrite($file, $line);
+        }
+        unset($GLOBALS['scrappedBlitzerArray'][$key]);
     }
     fwrite($file, "};");
+
     fclose($file);
 }
 
