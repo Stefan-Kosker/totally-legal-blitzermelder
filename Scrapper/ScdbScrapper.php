@@ -50,7 +50,8 @@ function writeBlitzerInCsvFile()
     $counterLimit = sizeof($GLOBALS['scrappedBlitzerArray']) / 3;
 
     $file = fopen('RadarPositions.h', 'w+');
-    fwrite($file, "const float radarPositions1[][3] PROGMEM = {\n");
+    fwrite($file, "#define PROGMEM_LATE __attribute__((section(\"progmem.zzz\")))\n\n");
+    fwrite($file, "const float radarPositions1[][3] PROGMEM_LATE = {\n");
 
 
     foreach ($GLOBALS['scrappedBlitzerArray'] as $key => $value) {
@@ -66,7 +67,7 @@ function writeBlitzerInCsvFile()
         $counter++;
     }
     $counter = 0;
-    fwrite($file, "};\n const float radarPositions2[][3] PROGMEM = {\n");
+    fwrite($file, "};\n const float radarPositions2[][3] PROGMEM_LATE = {\n");
 
     foreach ($GLOBALS['scrappedBlitzerArray'] as $key => $value) {
         if ($value !== null) {
@@ -79,7 +80,7 @@ function writeBlitzerInCsvFile()
         }
         $counter++;
     }
-    fwrite($file, "};\n const float radarPositions3[][3] PROGMEM = {\n");
+    fwrite($file, "};\n const float radarPositions3[][3] PROGMEM_LATE = {\n");
 
     foreach ($GLOBALS['scrappedBlitzerArray'] as $key => $value) {
         if ($value !== null) {

@@ -1,4 +1,6 @@
-const float pointsOfInterest1[][3] PROGMEM = {
+#define PROGMEM_LATE __attribute__((section("progmem.zzz")))
+
+const float radarPositions1[][3] PROGMEM_LATE = {
 {47.074867,5.458992,80},
 {47.086773,5.420333,130},
 {47.173363,5.495277,80},
@@ -2010,7 +2012,7 @@ const float pointsOfInterest1[][3] PROGMEM = {
 {48.574577,7.737304,50},
 {48.585724,7.784861,50},
 };
- const float pointsOfInterest2[][3] PROGMEM = {
+ const float radarPositions2[][3] PROGMEM_LATE = {
 {48.589123,7.730443,90},
 {48.599335,7.867222,50},
 {48.601627,7.877276,30},
@@ -4022,7 +4024,7 @@ const float pointsOfInterest1[][3] PROGMEM = {
 {51.275448,9.234610,50},
 {51.275555,9.234583,50},
 };
- const float radarPositions3[][3] PROGMEM = {
+ const float radarPositions3[][3] PROGMEM_LATE = {
 {51.276192,9.060956,50},
 {51.276340,9.061087,50},
 {51.286430,9.281402,50},

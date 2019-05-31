@@ -70,12 +70,12 @@ void loop() {
 
 double readFromMemory(int arrayIndex, int firstDimension, int secondDimension) {
   if (arrayIndex == 1) {
-    return pgm_read_float(&radarPositions1[firstDimension][secondDimension]);
+    return pgm_read_float_far(pgm_get_far_address(radarPositions1[firstDimension][secondDimension]));
   }
   if (arrayIndex == 2) {
-    return pgm_read_float(&radarPositions2[firstDimension][secondDimension]);
+    return pgm_read_float_far(pgm_get_far_address(radarPositions2[firstDimension][secondDimension]));
   }
   if (arrayIndex == 3) {
-    return pgm_read_float(&radarPositions3[firstDimension][secondDimension]);
+    return pgm_read_float_far(pgm_get_far_address(radarPositions3[firstDimension][secondDimension]));
   }
 }
