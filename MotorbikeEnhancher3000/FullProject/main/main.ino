@@ -46,23 +46,26 @@ void loop() {
       oldFuelAmount = fuelAmount;
     }
   }
-  Serial.println(counter);
+  Serial.println(counter + ": ");
   switch (counter) {
     case 1:
       value = readFromMemory(1, 0, 0);
-      Serial.println(value, 6);
+      //Serial.println(value, 6);
+      Serial.println(sizeof(radarPositions1)/sizeof(radarPositions1[0]));
       counter++;
       break;
 
     case 2:
       value = readFromMemory(2, 0, 0);
-      Serial.println(value, 6);
+      //Serial.println(value, 6);
+      Serial.println(sizeof(radarPositions2)/sizeof(radarPositions2[0]));
       counter++;
       break;
     case 3:
       counter = 1;
       value = readFromMemory(3, 0, 0);
-      Serial.println(value, 6);
+      //Serial.println(value, 6);
+      Serial.println(sizeof(radarPositions3)/sizeof(radarPositions3[0]));
       break;
   }
   delay(1000);

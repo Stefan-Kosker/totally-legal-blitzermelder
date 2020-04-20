@@ -33,14 +33,16 @@ function getBlitzer($x, $y, $increment)
 {
     $url = buildUrl($x, $y, $increment);
     $xmlString = file_get_contents($url);
-    if (strpos($xmlString, 'anzahl') === false) {
+
+    if(strpos($xmlString, 'marker anzahl=') === false) {
         parseXml($xmlString);
     } else {
-        if (strpos($xmlString, 'anzahl="0"') === false) {
-            echo $x . " " . $y . " too much\n";
-        } else {
+        if(strpos($xmlString, 'anzahl="0"') > 0) {
             $GLOBALS['notFound'] += 1;
+        } else {
+            echo $x . " " . $y . " too much\n";
         }
+
     }
 }
 
