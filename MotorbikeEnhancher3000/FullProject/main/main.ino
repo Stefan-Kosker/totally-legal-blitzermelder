@@ -54,17 +54,19 @@ void loop() {
 
   double currentPosLong = 8.473979;
   double currentPosLat =  49.069344;
-  int loopLimit = sizeof(radarPositions1)/sizeof(radarPositions1[0]);
+  int loopLimit = sizeof(radarPositions1) / sizeof(radarPositions1[0]);
+
+  Serial.println(readFromMemory(1, 0, 0));
 
   //Serial.println(distanceCalculator.calculateDistance(currentPosLong, currentPosLat, 8.427868, 49.090272), 6);
   starttime = millis();
-  for (int i = 0; i < 3; i++) {
-    for(int j = 0; j < loopLimit; j++) {
-     value = distanceCalculator.calculateDistance(currentPosLong, currentPosLat, readFromMemory(i, j, 1), readFromMemory(i, j, 0));
+  for (int i = 1; i < 4; i++) {
+    for (int j = 0; j < loopLimit; j++) {
+      value = distanceCalculator.calculateDistance(currentPosLong, currentPosLat, readFromMemory(i, j, 1), readFromMemory(i, j, 0));
     }
   }
   stoptime = millis();
-  Serial.println(stoptime-starttime, 6);
+  Serial.println(stoptime - starttime, 6);
   delay(1000);
 }
 
