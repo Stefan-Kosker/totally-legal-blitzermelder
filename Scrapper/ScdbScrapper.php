@@ -49,7 +49,7 @@ function getBlitzer($x, $y, $increment)
 function writeBlitzerInCsvFile()
 {
     $counter = 0;
-    $counterLimit = sizeof($GLOBALS['scrappedBlitzerArray']) / 3;
+    $counterLimit = floor(sizeof($GLOBALS['scrappedBlitzerArray']) / 3);
 
     $file = fopen('RadarPositions.h', 'w+');
     fwrite($file, "#define PROGMEM_LATE __attribute__((section(\"progmem.zzz\")))\n\n");

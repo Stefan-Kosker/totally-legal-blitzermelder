@@ -3,6 +3,7 @@
 #include "OilTemperature.h"
 #include "Fuel.h"
 #include "RadarPositions.h"
+#include "DistanceCalculator.h"
 
 
 double referenceVoltage;
@@ -15,6 +16,10 @@ double oldReferenceVoltage = 0.0;
 double oldOilTemperature;
 int oldFuelAmount;
 unsigned long time;
+
+
+unsigned long starttime;
+unsigned long stoptime;
 
 void setup() {
   tftDisplay.initializeDisplay();
@@ -46,28 +51,20 @@ void loop() {
       oldFuelAmount = fuelAmount;
     }
   }
-  Serial.println(counter + ": ");
-  switch (counter) {
-    case 1:
-      value = readFromMemory(1, 0, 0);
-      //Serial.println(value, 6);
-      Serial.println(sizeof(radarPositions1)/sizeof(radarPositions1[0]));
-      counter++;
-      break;
 
-    case 2:
-      value = readFromMemory(2, 0, 0);
-      //Serial.println(value, 6);
-      Serial.println(sizeof(radarPositions2)/sizeof(radarPositions2[0]));
-      counter++;
-      break;
-    case 3:
-      counter = 1;
-      value = readFromMemory(3, 0, 0);
-      //Serial.println(value, 6);
-      Serial.println(sizeof(radarPositions3)/sizeof(radarPositions3[0]));
-      break;
+  double currentPosLong = 8.473979;
+  double currentPosLat =  49.069344;
+  int loopLimit = sizeof(radarPositions1)/sizeof(radarPositions1[0]);
+
+  //Serial.println(distanceCalculator.calculateDistance(currentPosLong, currentPosLat, 8.427868, 49.090272), 6);
+  starttime = millis();
+  for (int i = 0; i < 3; i++) {
+    for(int j = 0; j < loopLimit; j++) {
+     value = distanceCalculator.calculateDistance(currentPosLong, currentPosLat, readFromMemory(i, j, 1), readFromMemory(i, j, 0));
+    }
   }
+  stoptime = millis();
+  Serial.println(stoptime-starttime, 6);
   delay(1000);
 }
 
