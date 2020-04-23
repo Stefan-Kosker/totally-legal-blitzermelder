@@ -1,4 +1,4 @@
-#define PROGMEM_LATE __attribute__((section("progmem.zzz")))
+#define PROGMEM_LATE __attribute__((section(".fini1")))
 
 const float radarPositions1[][3] PROGMEM_LATE = {
 {47.074867,5.458992,80},
