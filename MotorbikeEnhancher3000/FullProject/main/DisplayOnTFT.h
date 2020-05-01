@@ -11,27 +11,39 @@
 #define displayLight 3
 
 TFT TFTscreen = TFT(cs, dc, rst);
-bool alertMode = false;
+
+
 
 class DisplayOnTFT {
 
   public:
+    bool alertMode = false;
     void initializeDisplay() {
       pinMode(displayLight, OUTPUT);
       digitalWrite(displayLight, HIGH);
       TFTscreen.begin();
-      TFTscreen.background(NormalBackgroundColor_R, NormalBackgroundColor_G, NormalBackgroundColor_B);
-      TFTscreen.setTextSize(2);
-      drawImagesInitially(InitialIconColor);
+      clearDisplay();
+    }
+
+    void clearDisplay() {
+      if (alertMode) {
+        TFTscreen.background(AlertBackgroundColor_R, AlertBackgroundColor_G, AlertBackgroundColor_B);
+        TFTscreen.setTextSize(5);
+      } else {
+        TFTscreen.background(NormalBackgroundColor_R, NormalBackgroundColor_G, NormalBackgroundColor_B);
+        TFTscreen.setTextSize(2);
+        drawImagesInitially(InitialIconColor);
+      }
+
     }
 
     void updateFuelValue(double oldFuelValue, double fuelValue) {
-      removeText(String(oldFuelValue,0) + "%", TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
-      addText(String(fuelValue,0) + "%" , TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
+      removeText(String(oldFuelValue, 0) + "%", TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
+      addText(String(fuelValue, 0) + "%" , TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
     }
 
     void updateVoltageValue(double oldVoltageValue, double voltageValue) {
-      removeText(String(oldVoltageValue, 1) +"V", TEXTMARGINLEFT , POS2 + TEXTMARGINTOP);
+      removeText(String(oldVoltageValue, 1) + "V", TEXTMARGINLEFT , POS2 + TEXTMARGINTOP);
       addText(String(voltageValue, 1) + "V" , TEXTMARGINLEFT , POS2 + TEXTMARGINTOP);
     }
 
@@ -40,7 +52,31 @@ class DisplayOnTFT {
       addText(String(temperatureValue, 1) + "C", TEXTMARGINLEFT , POS3 + TEXTMARGINTOP);
     }
 
+    void warnUserFromRadar(int speedLimit, int distanceToRadar) {
+      speedLimit = 130;
+      distanceToRadar = makeDistanceValueFasterToComprehend(distanceToRadar);
+      removeText("\x0F:" + String(oldSpeedLimit), ALERTTEXTMARGINLEFT, ALERTTEXTMARGINTOP);
+      addText("\x0F:" + String(speedLimit), ALERTTEXTMARGINLEFT, ALERTTEXTMARGINTOP);
+      removeText(String(oldDistanceToRadar) + "m", ALERTTEXTMARGINLEFT, ALERTTEXTMARGINTOP + ALERTTEXTMARGINBETWEEN);
+      addText(String(distanceToRadar) + "m", ALERTTEXTMARGINLEFT, ALERTTEXTMARGINTOP + ALERTTEXTMARGINBETWEEN);
+      oldSpeedLimit = speedLimit;
+      oldDistanceToRadar = distanceToRadar;
+    }
+
   private:
+
+    int oldSpeedLimit  = 0;
+    int oldDistanceToRadar = 0;
+
+    int makeDistanceValueFasterToComprehend(int distanceValue) {
+      if (distanceValue > 100) {
+        distanceValue = distanceValue / 100;
+        return distanceValue * 100;
+      } else {
+        distanceValue = distanceValue / 10;
+        return distanceValue * 10;
+      }
+    }
 
     void applyWriteCommand(String text, int x, int y, int8_t color_r, int8_t color_g, int8_t color_b) {
       char _text[sizeof(text)];

@@ -1,5 +1,7 @@
 #define PROGMEM_LATE __attribute__((section(".fini1")))
 
+
+// LAT , LONG, Speedlimit
 const float radarPositions1[][3] PROGMEM_LATE = {
 {47.074867,5.458992,80},
 {47.086773,5.420333,130},
