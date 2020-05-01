@@ -3,6 +3,7 @@
 #include "./OilTemperature.h"
 #include "./Fuel.h"
 #include "./RadarPositionsAPI.h"
+#include "./GpsAPI.h"
 
 
 double referenceVoltage;
@@ -28,10 +29,12 @@ void setup() {
   tftDisplay.initializeDisplay();
   radarPositionsApi.init();
   Serial.begin(9600);
+  Serial1.begin(9600); // GPS
 }
 
 void loop() {
   time = millis();
+
   referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
   if (abs(oldReferenceVoltage - referenceVoltage) > 0.3) {
     tftDisplay.updateVoltageValue(oldReferenceVoltage, referenceVoltage);
@@ -60,9 +63,11 @@ void loop() {
     double currentPosLong = random(8473970, 8473979) / 1000000.0;
     double currentPosLat =  random(49069340, 49069349) / 1000000.0;
     int currentSpeed = 400;
-    if(millis() > 10000){
+    if (millis() > 20000) {
       currentSpeed = 50;
     }
+
+    gpsApi.showAll();
 
 
     radarPositionsApi.lastTimeCacheCreated = time;
@@ -73,7 +78,7 @@ void loop() {
     if (currentSpeed > 10 && alert && (radarPositionsApi.radarCache[2] > currentSpeed * 10)) {
       disarmAlert();
     }
-    if(alert && currentSpeed > 10) {
+    if (alert && currentSpeed > 10) {
       tftDisplay.warnUserFromRadar(radarPositionsApi.radarCache[1], radarPositionsApi.radarCache[2]);
     }
   }
