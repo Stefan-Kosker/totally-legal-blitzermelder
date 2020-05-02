@@ -19,7 +19,7 @@ class OilTemperature {
       return temperatureResistance;
     }
 
-    double convertOilTemperatureResistanceToCelcius(double temperatureResistance) {
+    int convertOilTemperatureResistanceToCelcius(double temperatureResistance) {
       int temperature = 1 / (0.001759284 + 0.000251684 * log(temperatureResistance) + 0.000000082 * pow(log(temperatureResistance), 3));
       temperature = temperature - 273;
       return temperature;

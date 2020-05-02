@@ -37,7 +37,7 @@ class DisplayOnTFT {
 
     }
 
-    void updateFuelValue(double oldFuelValue, double fuelValue) {
+    void updateFuelValue(int oldFuelValue, int fuelValue) {
       removeText(String(oldFuelValue, 0) + "%", TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
       addText(String(fuelValue, 0) + "%" , TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
     }
@@ -47,7 +47,7 @@ class DisplayOnTFT {
       addText(String(voltageValue, 1) + "V" , TEXTMARGINLEFT , POS2 + TEXTMARGINTOP);
     }
 
-    void updateTemperatureValue(double oldTemperatureValue, double temperatureValue) {
+    void updateTemperatureValue(int oldTemperatureValue, int temperatureValue) {
       removeText(String(oldTemperatureValue, 1) + "C", TEXTMARGINLEFT , POS3 + TEXTMARGINTOP);
       addText(String(temperatureValue, 1) + "C", TEXTMARGINLEFT , POS3 + TEXTMARGINTOP);
     }

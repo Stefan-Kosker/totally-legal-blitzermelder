@@ -7,14 +7,14 @@
 
 
 double referenceVoltage;
-double oilTemperature;
+int oilTemperature;
 int fuelAmount;
 int counter = 1;
 float value;
 bool alert = false;
 
 double oldReferenceVoltage = 0.0;
-double oldOilTemperature;
+int oldOilTemperature;
 int oldFuelAmount;
 unsigned long time;
 
