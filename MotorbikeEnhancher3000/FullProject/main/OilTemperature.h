@@ -8,7 +8,7 @@ class OilTemperature {
     double referenceVoltage;
     InternalVoltage internalVoltage;
 
-    double getOilTemperatureRessistance() {
+    double getOilTemperatureResistance() {
       analogReference(DEFAULT);
       analogTemperatureValue = analogRead(A1);
       analogTemperatureValue = analogRead(A1);
@@ -30,7 +30,7 @@ class OilTemperature {
     int sensorReadInterval = 1000;
     
     double getOilTemperature() {
-      return convertOilTemperatureResistanceToCelcius(getOilTemperatureRessistance());
+      return convertOilTemperatureResistanceToCelcius(getOilTemperatureResistance());
     }
 };
 
