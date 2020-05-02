@@ -44,7 +44,7 @@ class RadarPositionsAPI {
     int cacheRefreshInterval = 50;
 
     void init() {
-      for (int i = 0; i < CacheDimension; i++) {
+      for (int i = 0; i < CacheDimension; ++i) {
         radarCache[i] = 0;
       }
     }
@@ -61,8 +61,8 @@ class RadarPositionsAPI {
 
       lastTimeCacheRefreshed = lastTimeCacheCreated;
       distanceCalculator.calculateCosinusAndCache(currentPositionLat);
-      for (int i = 1; i < 4; i++) {
-        for (int j = 0; j < loopLimit; j++) {
+      for (int i = 1; i < 4; ++i) {
+        for (int j = 0; j < loopLimit; ++j) {
           radarLong = readFromMemory(i, j, 1);
           radarLat = readFromMemory(i, j, 0);
           distanceToRadar = distanceCalculator.calculateDistance(currentPositionLong, currentPositionLat, radarLong , radarLat);
