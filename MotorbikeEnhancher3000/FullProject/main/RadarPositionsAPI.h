@@ -50,7 +50,7 @@ class RadarPositionsAPI {
     }
 
     bool isNextRadarInFrontOfMe(int currentCourse) {
-      return (distanceCalculator.calculateBearingDifference(currentCourse, radarCache[3]) < 180);
+      return (distanceCalculator.calculateBearingDifference(currentCourse, radarCache[3]) < 90);
     }
 
     void writeClosestRadarIntoCache(double currentPositionLong, double currentPositionLat) {

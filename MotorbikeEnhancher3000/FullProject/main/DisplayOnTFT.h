@@ -53,7 +53,6 @@ class DisplayOnTFT {
     }
 
     void warnUserFromRadar(int speedLimit, int distanceToRadar) {
-      speedLimit = 130;
       distanceToRadar = makeDistanceValueFasterToComprehend(distanceToRadar);
       removeText("\x0F:" + String(oldSpeedLimit), ALERTTEXTMARGINLEFT, ALERTTEXTMARGINTOP);
       addText("\x0F:" + String(speedLimit), ALERTTEXTMARGINLEFT, ALERTTEXTMARGINTOP);
