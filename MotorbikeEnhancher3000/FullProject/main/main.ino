@@ -34,7 +34,7 @@ void setup() {
 
 void loop() {
   gpsApi.getAllRequiredData();
-  tftDisplay.showIfGpsIsEngaged(gpsApi.valid);
+  tftDisplay.showIfGpsIsEngaged(gpsApi.isGpsSignalValid());
   time = millis();
 
   referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
