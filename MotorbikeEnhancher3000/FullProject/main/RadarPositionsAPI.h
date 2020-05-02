@@ -1,6 +1,6 @@
 #include "RadarPositions.h"
 #include "DistanceCalculator.h"
-#define CacheDimension 6
+#define CacheDimension 4
 #define DesiredRangeInKm 5
 
 class RadarPositionsAPI {
@@ -37,7 +37,7 @@ class RadarPositionsAPI {
 
 
   public:
-    unsigned int radarCache[CacheDimension]; // id, speedLimit, distance
+    unsigned int radarCache[CacheDimension]; // id, speedLimit, distance, directionToTheRadar
     unsigned long lastTimeCacheCreated = 0;
     int cacheInterval = 1000;
     unsigned long lastTimeCacheRefreshed = 0;
@@ -49,9 +49,15 @@ class RadarPositionsAPI {
       }
     }
 
+    bool isNextRadarInFrontOfMe(int currentCourse) {
+      return (distanceCalculator.calculateBearingDifference(currentCourse, radarCache[3]) < 180);
+    }
+
     void writeClosestRadarIntoCache(double currentPositionLong, double currentPositionLat) {
       double closestRange = 9999.99;
       int closestRadarId = 0;
+      double closestLong = 0.0;
+      double closestLat = 0.0;
 
       lastTimeCacheRefreshed = lastTimeCacheCreated;
       distanceCalculator.calculateCosinusAndCache(currentPositionLat);
@@ -63,12 +69,15 @@ class RadarPositionsAPI {
           if (distanceToRadar < closestRange) {
             closestRange = distanceToRadar;
             closestRadarId = createIdForRadar(i, j);
+            closestLong = radarLong;
+            closestLat = radarLat;
           }
         }
       }
       radarCache[0] = closestRadarId;
       radarCache[1] = readFromMemory( closestRadarId / 10000, closestRadarId % 10000, 2);
       radarCache[2] = (int)(sqrt(closestRange) * 1000);
+      radarCache[3] = distanceCalculator.calculateBearing(currentPositionLong, currentPositionLat, closestLong , closestLat);
     }
 };
 

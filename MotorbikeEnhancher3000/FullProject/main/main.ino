@@ -64,10 +64,10 @@ void loop() {
   if (gpsApi.isGpsSignalValid() && (time - radarPositionsApi.lastTimeCacheCreated) > radarPositionsApi.cacheInterval) {
     radarPositionsApi.lastTimeCacheCreated = time;
     radarPositionsApi.writeClosestRadarIntoCache(gpsApi.longtitude, gpsApi.latitude);
-    if ( gpsApi.currentSpeed > 10 && !alert && (radarPositionsApi.radarCache[2] < gpsApi.currentSpeed * 10)) {
+    if (!alert && gpsApi.currentSpeed > 10 && radarPositionsApi.isNextRadarInFrontOfMe(gpsApi.currentCourse) && (radarPositionsApi.radarCache[2] < gpsApi.currentSpeed * 10)) {
       setAlert();
     }
-    if (gpsApi.currentSpeed > 10 && alert && (radarPositionsApi.radarCache[2] > gpsApi.currentSpeed * 10)) {
+    if (alert && gpsApi.currentSpeed > 10  && (!radarPositionsApi.isNextRadarInFrontOfMe(gpsApi.currentCourse)  || (radarPositionsApi.radarCache[2] > gpsApi.currentSpeed * 10))) {
       disarmAlert();
     }
     if (alert && gpsApi.currentSpeed > 10) {

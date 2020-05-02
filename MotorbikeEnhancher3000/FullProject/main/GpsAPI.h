@@ -17,7 +17,7 @@ class GpsAPI {
     double latitude;
     double longtitude;
     int currentSpeed;
-    double currentCourse;
+    int currentCourse;
 
     void getAllRequiredData() {
       if(Serial1.available() == 0) {
