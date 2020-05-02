@@ -1,6 +1,15 @@
 #include <TinyGPS++.h>
 
 class GpsAPI {
+  private:
+    unsigned long lastDataTime = 0;
+
+    void debounceInvalidSignal() {
+      if (millis() - lastDataTime > 5000) {
+        valid = false;
+      }
+    }
+
   public:
     TinyGPSPlus gps;
     bool valid = false;
@@ -11,6 +20,9 @@ class GpsAPI {
     double currentCourse;
 
     void getAllRequiredData() {
+      if(Serial1.available() == 0) {
+        debounceInvalidSignal();
+      }
       while (Serial1.available() > 0) {
         if (gps.encode(Serial1.read())) {
           valid = gps.location.isValid();
@@ -19,6 +31,9 @@ class GpsAPI {
           longtitude = gps.location.lng();
           currentSpeed = gps.speed.kmph();
           currentCourse = gps.course.deg();
+          lastDataTime = millis();
+        } else {
+          debounceInvalidSignal();
         }
       }
     }
