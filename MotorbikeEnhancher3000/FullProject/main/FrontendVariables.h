@@ -9,6 +9,7 @@
 #define ALERTTEXTMARGINLEFT 10
 #define ALERTTEXTMARGINTOP 15
 #define ALERTTEXTMARGINBETWEEN 60
+#define GpsEngagedIconMargin 140
 
 #define InitialIconColor ST7735_GREEN
 #define AlertIconColor ST7735_BLUE

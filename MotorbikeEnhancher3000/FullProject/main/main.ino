@@ -34,6 +34,10 @@ void setup() {
 
 void loop() {
   time = millis();
+  gpsApi.getAllRequiredData();
+  tftDisplay.showIfGpsIsEngaged(gpsApi.valid);
+  Serial.println(gpsApi.valid);
+  
 
   referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
   if (abs(oldReferenceVoltage - referenceVoltage) > 0.3) {
@@ -59,30 +63,19 @@ void loop() {
     }
   }
 
-  if (alert || (time - radarPositionsApi.lastTimeCacheCreated) > radarPositionsApi.cacheInterval) {
-    double currentPosLong = random(8473970, 8473979) / 1000000.0;
-    double currentPosLat =  random(49069340, 49069349) / 1000000.0;
-    int currentSpeed = 400;
-    if (millis() > 20000) {
-      currentSpeed = 50;
-    }
-
-    gpsApi.showAll();
-
-
+  if (gpsApi.isGpsSignalValid() && (time - radarPositionsApi.lastTimeCacheCreated) > radarPositionsApi.cacheInterval) {
     radarPositionsApi.lastTimeCacheCreated = time;
-    radarPositionsApi.writeClosestRadarIntoCache(currentPosLong, currentPosLat);
-    if ( currentSpeed > 10 && !alert && (radarPositionsApi.radarCache[2] < currentSpeed * 10)) {
+    radarPositionsApi.writeClosestRadarIntoCache(gpsApi.longtitude, gpsApi.latitude);
+    if ( gpsApi.currentSpeed > 10 && !alert && (radarPositionsApi.radarCache[2] < gpsApi.currentSpeed * 10)) {
       setAlert();
     }
-    if (currentSpeed > 10 && alert && (radarPositionsApi.radarCache[2] > currentSpeed * 10)) {
+    if (gpsApi.currentSpeed > 10 && alert && (radarPositionsApi.radarCache[2] > gpsApi.currentSpeed * 10)) {
       disarmAlert();
     }
-    if (alert && currentSpeed > 10) {
+    if (alert && gpsApi.currentSpeed > 10) {
       tftDisplay.warnUserFromRadar(radarPositionsApi.radarCache[1], radarPositionsApi.radarCache[2]);
     }
   }
-  delay(100);
 }
 
 void setAlert () {

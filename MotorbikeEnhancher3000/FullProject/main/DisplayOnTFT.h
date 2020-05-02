@@ -63,6 +63,16 @@ class DisplayOnTFT {
       oldDistanceToRadar = distanceToRadar;
     }
 
+    void showIfGpsIsEngaged(bool gpsStatus) {
+      if (!alertMode) {
+        if (gpsStatus) {
+          applyWriteCommand("\x03", GpsEngagedIconMargin, PADDING, 0, 255, 0);
+        } else {
+          removeText("\x03", GpsEngagedIconMargin, PADDING);
+        }
+      }
+    }
+
   private:
 
     int oldSpeedLimit  = 0;
