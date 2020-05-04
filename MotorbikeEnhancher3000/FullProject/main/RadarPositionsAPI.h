@@ -33,9 +33,6 @@ class RadarPositionsAPI {
       return 0.0;
     }
 
-
-
-
   public:
     unsigned int radarCache[CacheDimension]; // id, speedLimit, distance, directionToTheRadar
     unsigned long lastTimeCacheCreated = 0;
