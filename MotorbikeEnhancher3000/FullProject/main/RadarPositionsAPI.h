@@ -36,7 +36,7 @@ class RadarPositionsAPI {
   public:
     unsigned int radarCache[CacheDimension]; // id, speedLimit, distance, directionToTheRadar
     unsigned long lastTimeCacheCreated = 0;
-    int cacheInterval = 1000;
+    int cacheInterval = 2000;
     unsigned long lastTimeCacheRefreshed = 0;
     int cacheRefreshInterval = 50;
 

@@ -33,10 +33,14 @@ void setup() {
 }
 
 void loop() {
-  gpsApi.getAllRequiredData();
-  tftDisplay.showIfGpsIsEngaged(gpsApi.isGpsSignalValid());
   time = millis();
-
+  
+  gpsApi.getAllRequiredData();
+  if(time - tftDisplay.lastTimeGPSStatus > tftDisplay.GPSStatusInterval) {
+    tftDisplay.lastTimeGPSStatus = time;
+    tftDisplay.showIfGpsIsEngaged(gpsApi.isGpsSignalValid());
+  }
+  
   referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
   if (abs(oldReferenceVoltage - referenceVoltage) > 0.3) {
     tftDisplay.updateVoltageValue(oldReferenceVoltage, referenceVoltage);

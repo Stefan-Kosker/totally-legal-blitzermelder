@@ -13,11 +13,13 @@
 TFT TFTscreen = TFT(cs, dc, rst);
 
 
-
 class DisplayOnTFT {
 
   public:
     bool alertMode = false;
+    unsigned long lastTimeGPSStatus;
+    int GPSStatusInterval = 1000;
+    
     void initializeDisplay() {
       pinMode(displayLight, OUTPUT);
       digitalWrite(displayLight, HIGH);
@@ -62,12 +64,15 @@ class DisplayOnTFT {
       oldDistanceToRadar = distanceToRadar;
     }
 
-    void showIfGpsIsEngaged(bool gpsStatus) {
+    void showIfGpsIsEngaged(int gpsStatus) {
       if (!alertMode) {
-        if (gpsStatus) {
+        removeText("X", GpsEngagedIconMargin, PADDING);
+        removeText("\x03", GpsEngagedIconMargin, PADDING);
+        if (gpsStatus == 1) {
           applyWriteCommand("\x03", GpsEngagedIconMargin, PADDING, 0, 255, 0);
-        } else {
-          removeText("\x03", GpsEngagedIconMargin, PADDING);
+        }
+        if (gpsStatus == 2) {
+          applyWriteCommand("X", GpsEngagedIconMargin, PADDING, 0, 255, 0);
         }
       }
     }
