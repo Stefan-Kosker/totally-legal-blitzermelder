@@ -24,6 +24,7 @@ class DisplayOnTFT {
       pinMode(displayLight, OUTPUT);
       digitalWrite(displayLight, HIGH);
       TFTscreen.begin();
+      TFTscreen.setRotation(2);
       clearDisplay();
     }
 

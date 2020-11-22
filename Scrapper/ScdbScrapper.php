@@ -52,7 +52,8 @@ function writeBlitzerInCsvFile()
     $counterLimit = floor(sizeof($GLOBALS['scrappedBlitzerArray']) / 3);
 
     $file = fopen('RadarPositions.h', 'w+');
-    fwrite($file, "#define PROGMEM_LATE __attribute__((section(\"progmem.zzz\")))\n\n");
+    fwrite($file, "#define PROGMEM_LATE __attribute__((section(\".fini1\")))\n\n");
+    fwrite($file, "// LAT, LONG, Speedlimit \n");
     fwrite($file, "const float radarPositions1[][3] PROGMEM_LATE = {\n");
 
 
