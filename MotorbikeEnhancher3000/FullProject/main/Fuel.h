@@ -5,7 +5,15 @@ class Fuel {
 
     int convertFuelResistanceToFuel(double fuelResistance) {
       double fuelAmount;
-      fuelAmount = 1.061143 - 0.01630667 * fuelResistance + 0.00005695241 * pow(fuelResistance, 2);
+      if(fuelResistance < 55) {
+        fuelAmount = 0.000002 *  pow(fuelResistance, 3) - 0.00002 *  pow(fuelResistance, 2) - 0.0046 * fuelResistance + 1.0447; 
+      }
+      if(fuelResistance >= 55 && fuelResistance < 100) {
+        fuelAmount = 0.0002 *  pow(fuelResistance, 2) - 0.0378 * fuelResistance + 1.9952;
+      }
+      if(fuelResistance >= 100) {
+        fuelAmount = 0.1;
+      }
       return (int)(fuelAmount * 100);
     }
 

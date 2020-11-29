@@ -40,7 +40,6 @@ class GpsAPI {
           if (millis() - lastCourseTime > 1000) {
             lastCourseTime = millis();
             currentCourse = gps.course.deg();
-            Serial.println("Speed: " + String(currentSpeed) + " currentCourse: " + String(currentCourse));
           }
           lastDataTime = millis();
         } else {
