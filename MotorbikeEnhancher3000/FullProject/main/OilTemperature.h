@@ -20,15 +20,14 @@ class OilTemperature {
     }
 
     int convertOilTemperatureResistanceToCelcius(double temperatureResistance) {
-      int temperature = 1 / (0.001759284 + 0.000251684 * log(temperatureResistance) + 0.000000082 * pow(log(temperatureResistance), 3));
-      temperature = temperature - 273;
+      int temperature =  -35.22 * (log(temperatureResistance) / 0.43429) + 251.42;
       return temperature;
     }
 
   public:
     unsigned long lastTimeSensorRead = 0;
     int sensorReadInterval = 1000;
-    
+
     double getOilTemperature() {
       return convertOilTemperatureResistanceToCelcius(getOilTemperatureResistance());
     }
