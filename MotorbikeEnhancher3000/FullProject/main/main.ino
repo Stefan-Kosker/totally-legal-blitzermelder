@@ -9,13 +9,12 @@
 double referenceVoltage;
 int oilTemperature;
 int fuelAmount;
-int counter = 1;
 float value;
 bool alert = false;
 
 double oldReferenceVoltage = 0.0;
-int oldOilTemperature;
-int oldFuelAmount;
+int oldOilTemperature = -100;
+int oldFuelAmount = - 100;
 unsigned long time;
 
 
@@ -34,15 +33,15 @@ void setup() {
 
 void loop() {
   time = millis();
-  
+
   gpsApi.getAllRequiredData();
-  if(time - tftDisplay.lastTimeGPSStatus > tftDisplay.GPSStatusInterval) {
+  if (time - tftDisplay.lastTimeGPSStatus > tftDisplay.GPSStatusInterval) {
     tftDisplay.lastTimeGPSStatus = time;
     tftDisplay.showIfGpsIsEngaged(gpsApi.isGpsSignalValid());
   }
-  
+
   referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
-  if (abs(oldReferenceVoltage - referenceVoltage) > 0.3) {
+  if (abs(oldReferenceVoltage - referenceVoltage) > 0.09) {
     tftDisplay.updateVoltageValue(oldReferenceVoltage, referenceVoltage);
     oldReferenceVoltage = referenceVoltage;
   }

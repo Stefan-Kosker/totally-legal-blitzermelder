@@ -26,7 +26,7 @@ class OilTemperature {
 
   public:
     unsigned long lastTimeSensorRead = 0;
-    int sensorReadInterval = 1000;
+    int sensorReadInterval = 10000;
 
     double getOilTemperature() {
       return convertOilTemperatureResistanceToCelcius(getOilTemperatureResistance());

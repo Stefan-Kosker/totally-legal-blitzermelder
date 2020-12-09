@@ -19,7 +19,7 @@ class DisplayOnTFT {
     bool alertMode = false;
     unsigned long lastTimeGPSStatus;
     int GPSStatusInterval = 1000;
-    
+
     void initializeDisplay() {
       pinMode(displayLight, OUTPUT);
       digitalWrite(displayLight, HIGH);
@@ -29,6 +29,7 @@ class DisplayOnTFT {
     }
 
     void clearDisplay() {
+      Serial.println('ClearDisplayCalled');
       if (alertMode) {
         TFTscreen.background(AlertBackgroundColor_R, AlertBackgroundColor_G, AlertBackgroundColor_B);
         TFTscreen.setTextSize(5);
@@ -41,8 +42,8 @@ class DisplayOnTFT {
     }
 
     void updateFuelValue(int oldFuelValue, int fuelValue) {
-      removeText(String(oldFuelValue, 0) + "%", TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
-      addText(String(fuelValue, 0) + "%" , TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
+      removeText(String(oldFuelValue) + "%", TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
+      addText(String(fuelValue) + "%" , TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
     }
 
     void updateVoltageValue(double oldVoltageValue, double voltageValue) {
@@ -51,8 +52,8 @@ class DisplayOnTFT {
     }
 
     void updateTemperatureValue(int oldTemperatureValue, int temperatureValue) {
-      removeText(String(oldTemperatureValue, 1) + "C", TEXTMARGINLEFT , POS3 + TEXTMARGINTOP);
-      addText(String(temperatureValue, 1) + "C", TEXTMARGINLEFT , POS3 + TEXTMARGINTOP);
+      removeText(String(oldTemperatureValue) + "C", TEXTMARGINLEFT , POS3 + TEXTMARGINTOP);
+      addText(String(temperatureValue) + "C", TEXTMARGINLEFT , POS3 + TEXTMARGINTOP);
     }
 
     void warnUserFromRadar(int speedLimit, int distanceToRadar) {
