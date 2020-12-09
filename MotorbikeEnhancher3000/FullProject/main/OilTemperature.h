@@ -15,7 +15,7 @@ class OilTemperature {
       analogTemperatureValue = analogRead(A1);
       referenceVoltage = internalVoltage.getInternalReferenceVoltage();
       temperatureVoltage = ((double)analogTemperatureValue / 1023.0) * referenceVoltage;
-      temperatureResistance = (temperatureVoltage * referenceResistance) / (referenceVoltage - temperatureVoltage);
+      temperatureResistance =  (- referenceVoltage * referenceResistance / (temperatureVoltage - referenceVoltage)) - referenceResistance;
       return temperatureResistance;
     }
 

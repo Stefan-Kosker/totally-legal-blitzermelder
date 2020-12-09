@@ -29,7 +29,6 @@ class DisplayOnTFT {
     }
 
     void clearDisplay() {
-      Serial.println('ClearDisplayCalled');
       if (alertMode) {
         TFTscreen.background(AlertBackgroundColor_R, AlertBackgroundColor_G, AlertBackgroundColor_B);
         TFTscreen.setTextSize(5);
