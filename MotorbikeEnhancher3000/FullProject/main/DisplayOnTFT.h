@@ -94,8 +94,9 @@ class DisplayOnTFT {
     }
 
     void applyWriteCommand(String text, int x, int y, int8_t color_r, int8_t color_g, int8_t color_b) {
-      char _text[sizeof(text)];
-      text.toCharArray(_text, sizeof(_text));
+      char _text[text.length() + 1];
+      text.toCharArray(_text, text.length()+1);
+      _text[text.length()] = '\0'; // In case 'toCharArray' doesn't add the null terminator.
 
       TFTscreen.stroke(color_r, color_g, color_b);
       TFTscreen.text(_text, x, y);
