@@ -50,7 +50,7 @@ void loop() {
     oldReferenceVoltage = referenceVoltage;
   }
 
-  if (!tftDisplay.alertMode && (time - oilTemperatureSensor.lastTimeSensorRead) > oilTemperatureSensor.sensorReadInterval) {
+  if ((!tftDisplay.alertMode && (time - oilTemperatureSensor.lastTimeSensorRead) > oilTemperatureSensor.sensorReadInterval) || oilTemperatureSensor.lastTimeSensorRead == 0 ) {
     oilTemperatureSensor.lastTimeSensorRead = time;
     oilTemperature = oilTemperatureSensor.getOilTemperature();
     if (abs(oldOilTemperature - oilTemperature) >= 0.5) {
@@ -60,7 +60,7 @@ void loop() {
   }
 
 
-  if (!tftDisplay.alertMode && (time - fuelSensor.lastTimeSensorRead) > fuelSensor.sensorReadInterval) {
+  if ((!tftDisplay.alertMode && (time - fuelSensor.lastTimeSensorRead) > fuelSensor.sensorReadInterval) || fuelSensor.lastTimeSensorRead == 0 ) {
     fuelSensor.lastTimeSensorRead = time;
     fuelAmount = fuelSensor.getFuelAmount();
     if (abs(oldFuelAmount - fuelAmount) >= 1) {
@@ -76,7 +76,7 @@ void loop() {
     if (!tftDisplay.alertMode && gpsApi.currentSpeed > 10 && radarPositionsApi.isNextRadarInFrontOfMe(gpsApi.currentCourse) && (radarPositionsApi.radarCache[2] < gpsApi.currentSpeed * 10)) {
       setAlert();
     }
-    if (tftDisplay.alertMode && gpsApi.currentSpeed > 10  && (!radarPositionsApi.isNextRadarInFrontOfMe(gpsApi.currentCourse)  || (radarPositionsApi.radarCache[2] > gpsApi.currentSpeed * 10)) || gpsApi.currentSpeed < 10 ) {
+    if (tftDisplay.alertMode && gpsApi.currentSpeed > 10  && (!radarPositionsApi.isNextRadarInFrontOfMe(gpsApi.currentCourse)  || (radarPositionsApi.radarCache[2] > gpsApi.currentSpeed * 10)) || (tftDisplay.alertMode && gpsApi.currentSpeed < 10) ) {
       disarmAlert();
     }
     if (tftDisplay.alertMode && gpsApi.currentSpeed > 10) {
@@ -93,4 +93,6 @@ void setAlert () {
 void disarmAlert() {
   tftDisplay.alertMode = false;
   tftDisplay.clearDisplay();
+  fuelSensor.lastTimeSensorRead = 0;
+  oilTemperatureSensor.lastTimeSensorRead = 0;
 }
