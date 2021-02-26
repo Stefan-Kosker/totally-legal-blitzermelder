@@ -13,7 +13,7 @@ float value;
 
 double oldReferenceVoltage = 0.0;
 int oldOilTemperature = -100;
-int oldFuelAmount = - 100;
+int oldFuelAmount = -100;
 unsigned long time;
 
 
@@ -25,11 +25,14 @@ double tempLong;
 
 
 void setup() {
+  digitalWrite(displayLight, LOW);
   tftDisplay.initializeDisplay();
   radarPositionsApi.init();
   Serial.begin(9600);
   Serial1.begin(9600); // GPS
 }
+
+void(* resetFunc) (void) = 0; //declare reset function @ address 0
 
 void loop() {
   time = millis();
@@ -83,6 +86,10 @@ void loop() {
       tftDisplay.warnUserFromRadar(radarPositionsApi.radarCache[1], radarPositionsApi.radarCache[2]);
     }
   }
+
+  if (time > 120000) {
+    resetFunc();
+  }
 }
 
 void setAlert () {
@@ -95,4 +102,6 @@ void disarmAlert() {
   tftDisplay.clearDisplay();
   fuelSensor.lastTimeSensorRead = 0;
   oilTemperatureSensor.lastTimeSensorRead = 0;
+  int oldOilTemperature = -100;
+  int oldFuelAmount = -100;
 }
