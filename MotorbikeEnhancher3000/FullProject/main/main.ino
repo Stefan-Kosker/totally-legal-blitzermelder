@@ -87,7 +87,7 @@ void loop() {
     }
   }
 
-  if (time > 120000) {
+  if (time > 60000) {
     resetFunc();
   }
 }
