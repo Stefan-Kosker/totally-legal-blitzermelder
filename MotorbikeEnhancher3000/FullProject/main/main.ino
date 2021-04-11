@@ -102,6 +102,7 @@ void disarmAlert() {
   tftDisplay.clearDisplay();
   fuelSensor.lastTimeSensorRead = 0;
   oilTemperatureSensor.lastTimeSensorRead = 0;
-  int oldOilTemperature = -100;
-  int oldFuelAmount = -100;
+  oldOilTemperature = -100;
+  oldFuelAmount = -100;
+  oldReferenceVoltage = 0.0;
 }
