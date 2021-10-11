@@ -52,7 +52,6 @@ class OilTemperature {
     };
 
     double getOilTemperatureResistance() {
-      analogReference(DEFAULT);
       analogTemperatureValue = analogRead(A1);
       analogTemperatureValue = analogRead(A1);
       analogTemperatureValue = analogRead(A1);

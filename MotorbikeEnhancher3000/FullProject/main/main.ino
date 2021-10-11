@@ -11,7 +11,6 @@ int oilTemperature;
 int fuelAmount;
 float value;
 
-double oldReferenceVoltage = 0.0;
 int oldOilTemperature = -100;
 int oldFuelAmount = -100;
 unsigned long time;
@@ -30,6 +29,7 @@ void setup() {
   radarPositionsApi.init();
   Serial.begin(9600);
   Serial1.begin(9600); // GPS
+  referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
 }
 
 void(* resetFunc) (void) = 0; //declare reset function @ address 0
@@ -42,15 +42,6 @@ void loop() {
   if (time - tftDisplay.lastTimeGPSStatus > tftDisplay.GPSStatusInterval) {
     tftDisplay.lastTimeGPSStatus = time;
     tftDisplay.showIfGpsIsEngaged(gpsApi.isGpsSignalValid());
-  }
-
-
-  referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
-  if (abs(oldReferenceVoltage - referenceVoltage) > 0.09) {
-    if (!tftDisplay.alertMode) {
-      tftDisplay.updateVoltageValue(oldReferenceVoltage, referenceVoltage);
-    }
-    oldReferenceVoltage = referenceVoltage;
   }
 
   if ((!tftDisplay.alertMode && (time - oilTemperatureSensor.lastTimeSensorRead) > oilTemperatureSensor.sensorReadInterval) || oilTemperatureSensor.lastTimeSensorRead == 0 ) {
@@ -104,5 +95,4 @@ void disarmAlert() {
   oilTemperatureSensor.lastTimeSensorRead = 0;
   oldOilTemperature = -100;
   oldFuelAmount = -100;
-  oldReferenceVoltage = 0.0;
 }

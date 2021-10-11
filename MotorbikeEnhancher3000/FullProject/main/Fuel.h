@@ -19,7 +19,6 @@ class Fuel {
 
     double getFuelResistance() {
       int analogFuelValue = 0;
-      analogReference(DEFAULT);
       analogFuelValue = analogRead(A2);
       analogFuelValue = analogRead(A2);
       analogFuelValue = analogRead(A2);

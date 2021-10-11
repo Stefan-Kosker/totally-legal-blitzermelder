@@ -45,14 +45,9 @@ class DisplayOnTFT {
       addText(String(fuelValue) + "%" , TEXTMARGINLEFT , POS1 + TEXTMARGINTOP);
     }
 
-    void updateVoltageValue(double oldVoltageValue, double voltageValue) {
-      removeText(String(oldVoltageValue, 1) + "V", TEXTMARGINLEFT , POS2 + TEXTMARGINTOP);
-      addText(String(voltageValue, 1) + "V" , TEXTMARGINLEFT , POS2 + TEXTMARGINTOP);
-    }
-
     void updateTemperatureValue(int oldTemperatureValue, int temperatureValue) {
-      removeText(String(oldTemperatureValue) + "C", TEXTMARGINLEFT , POS3 + TEXTMARGINTOP);
-      addText(String(temperatureValue) + "C", TEXTMARGINLEFT , POS3 + TEXTMARGINTOP);
+      removeText(String(oldTemperatureValue) + "C", TEXTMARGINLEFT , POS2 + TEXTMARGINTOP);
+      addText(String(temperatureValue) + "C", TEXTMARGINLEFT , POS2 + TEXTMARGINTOP);
     }
 
     void warnUserFromRadar(int speedLimit, int distanceToRadar) {
@@ -120,18 +115,14 @@ class DisplayOnTFT {
 
     void drawImagesInitially(int16_t color) {
       drawFuelIcon(color);
-      drawBatteryIcon(color);
       drawOilTemperatureIcon(color);
     }
 
     void drawFuelIcon(int16_t color) {
       TFTscreen.drawBitmap(PADDING, PADDING + POS1, fuelImage, IMGWIDTH, IMGHEIGHT, color);
     }
-    void drawBatteryIcon(int16_t color) {
-      TFTscreen.drawBitmap(PADDING, PADDING + POS2, batteryImage, IMGWIDTH, IMGHEIGHT, color);
-    }
     void drawOilTemperatureIcon(int16_t color) {
-      TFTscreen.drawBitmap(PADDING, PADDING + POS3, oilTemperatureImage, IMGWIDTH, IMGHEIGHT, color);
+      TFTscreen.drawBitmap(PADDING, PADDING + POS2, oilTemperatureImage, IMGWIDTH, IMGHEIGHT, color);
     }
 };
 
