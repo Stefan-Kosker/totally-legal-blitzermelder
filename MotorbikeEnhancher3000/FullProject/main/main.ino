@@ -29,7 +29,6 @@ void setup() {
   radarPositionsApi.init();
   Serial.begin(9600);
   Serial1.begin(9600); // GPS
-  referenceVoltage = internalVoltageSensor.getInternalReferenceVoltage();
 }
 
 void(* resetFunc) (void) = 0; //declare reset function @ address 0
@@ -78,7 +77,7 @@ void loop() {
     }
   }
 
-  if (time > 60000) {
+  if (time > 120000) {
     resetFunc();
   }
 }

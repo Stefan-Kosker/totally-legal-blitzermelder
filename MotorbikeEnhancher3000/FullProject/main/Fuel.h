@@ -1,6 +1,6 @@
 class Fuel {
   private:
-    double referenceResistance = 47;
+    double referenceResistance = 47.0;
     InternalVoltage internalVoltage;
 
     int convertFuelResistanceToFuel(double fuelResistance) {

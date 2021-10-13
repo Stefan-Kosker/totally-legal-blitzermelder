@@ -14,7 +14,7 @@ class InternalVoltage {
 //      analogReferenceValue = analogRead(A0);
 //      referenceVoltage = double(analogReferenceValue) / 1023.0 * 1.1;
 //      referenceVoltage = referenceVoltage * (referenceResistanceR1 + referenceResistanceR2) / referenceResistanceR1;
-      return referenceVoltage;
+      return 4.6;
     }
 
 };
