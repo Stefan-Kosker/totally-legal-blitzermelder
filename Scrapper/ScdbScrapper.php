@@ -104,7 +104,7 @@ function writeBlitzerInCsvFile()
  */
 function buildUrl($x, $y, $increment)
 {
-    $url = 'https://map.scdb.info/speedcameramap/xhr/search/l/de-DE/lngmin/' . $x . '/lngmax/' . ($x + 0.5) . '/latmin/' . $y . '/latmax/' . ($y + 0.5);
+    $url = 'http://map.scdb.info/speedcameramap/xhr/search/l/de-DE/lngmin/' . $x . '/lngmax/' . ($x + 0.5) . '/latmin/' . $y . '/latmax/' . ($y + 0.5);
     return $url;
 }
 
